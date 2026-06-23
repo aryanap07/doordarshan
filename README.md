@@ -1,4 +1,4 @@
-# doordarshan
+# DoorDarshan
 
 An open-source video conferencing application built with FastAPI for fast and reliable real-time communication.
 
