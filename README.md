@@ -2,7 +2,7 @@
 
 An open-source video conferencing application built with FastAPI for fast and reliable real-time communication.
 
-**Author:** DoorDarshan Contributors
+**Author:** Doordarshan Contributors
 
 ## Status
 Project scaffolding in progress. Docker setup intentionally deferred.
