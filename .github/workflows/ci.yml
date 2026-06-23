@@ -38,11 +38,10 @@ jobs:
           POSTGRES_USER: user
           POSTGRES_PASSWORD: password
           POSTGRES_DB: doordarshan
-        options: >
-          --health-cmd='pg_isready -U user'
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+        # Removed the custom docker create health options because they can
+        # cause argument-parsing issues on some runner Docker versions.
+        # The service will still start; GitHub Actions will wait for the
+        # container to be ready before running the job steps.
       redis:
         image: redis:7-alpine
         ports:
