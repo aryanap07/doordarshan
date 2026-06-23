@@ -1,0 +1,29 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# Media / uploads
+media/recordings/*
+media/uploads/*
+!media/recordings/.gitkeep
+!media/uploads/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
