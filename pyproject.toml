@@ -1,0 +1,100 @@
+[project]
+name = "doordarshan"
+version = "0.1.0"
+description = "An open-source video conferencing application built with FastAPI for fast and reliable real-time communication."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+authors = [
+    { name = "DoorDarshan Contributors" }
+]
+
+keywords = [
+    "fastapi",
+    "webrtc",
+    "video-conferencing",
+    "websocket",
+    "realtime"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: FastAPI",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11"
+]
+
+dependencies = [
+    "fastapi>=0.116.0",
+    "uvicorn[standard]>=0.35.0",
+
+    "sqlalchemy>=2.0.40",
+    "alembic>=1.16.0",
+
+    "pydantic-settings>=2.10.0",
+    "email-validator>=2.2.0",
+
+    "python-jose[cryptography]>=3.5.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-multipart>=0.0.20",
+
+    "websockets>=15.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.0",
+    "pytest-cov>=6.2.0",
+    "httpx>=0.28.0",
+
+    "black>=25.1.0",
+    "isort>=6.0.0",
+    "ruff>=0.12.0",
+
+    "mypy>=1.17.0"
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "B"
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["app"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[build-system]
+requires = [
+    "setuptools>=75",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
