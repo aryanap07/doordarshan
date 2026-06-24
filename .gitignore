@@ -11,9 +11,19 @@ env/
 # Environment variables
 .env
 
+# Database
+*.db
+
 # IDE
 .vscode/
 .idea/
 
 # OS
 .DS_Store
+
+# Python testing
+.pytest_cache/
+.coverage
+
+# Alembic cache
+alembic/__pycache__/

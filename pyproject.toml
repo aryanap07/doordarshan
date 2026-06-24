@@ -27,25 +27,34 @@ classifiers = [
 ]
 
 dependencies = [
-    "fastapi>=0.116.0",
-    "uvicorn[standard]>=0.35.0",
+    "fastapi==0.116.1",
+    "uvicorn[standard]==0.35.0",
 
-    "sqlalchemy>=2.0.40",
-    "alembic>=1.16.0",
+    "sqlalchemy==2.0.41",
+    "alembic==1.16.4",
 
-    "pydantic-settings>=2.10.0",
-    "email-validator>=2.2.0",
+    "pydantic-settings==2.10.1",
+    "email-validator==2.3.0",
 
-    "python-jose[cryptography]>=3.5.0",
-    "passlib[bcrypt]>=1.7.4",
-    "python-multipart>=0.0.20",
+    "python-jose[cryptography]==3.5.0",
 
-    "websockets>=15.0"
+    "pwdlib[argon2]==0.3.0",
+
+    "python-multipart==0.0.20",
+    "websockets==15.0.1",
 ]
 
 [project.optional-dependencies]
+postgres = [
+    "asyncpg>=0.30.0",
+]
+sqlite = [
+    "aiosqlite>=0.21.0",
+]
+
 dev = [
     "pytest>=8.4.0",
+    "pytest-asyncio>=1.4.0",
     "pytest-cov>=6.2.0",
     "httpx>=0.28.0",
 
@@ -53,7 +62,7 @@ dev = [
     "isort>=6.0.0",
     "ruff>=0.12.0",
 
-    "mypy>=1.17.0"
+    "mypy>=1.17.0",
 ]
 
 [tool.black]
@@ -74,7 +83,7 @@ select = [
     "F",
     "I",
     "UP",
-    "B"
+    "B",
 ]
 
 [tool.mypy]
@@ -84,6 +93,7 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+asyncio_mode = "auto"
 
 [tool.coverage.run]
 source = ["app"]
@@ -98,3 +108,6 @@ requires = [
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
