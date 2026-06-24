@@ -11,16 +11,6 @@ env/
 # Environment variables
 .env
 
-# Logs
-logs/*
-!logs/.gitkeep
-
-# Media / uploads
-media/recordings/*
-media/uploads/*
-!media/recordings/.gitkeep
-!media/uploads/.gitkeep
-
 # IDE
 .vscode/
 .idea/
