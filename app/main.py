@@ -4,7 +4,7 @@ from app.api.v1.endpoints.auth import router as auth_router
 
 
 app = FastAPI(
-    title="DoorDarshan",
+    title="Doordarshan",
 )
 
 
