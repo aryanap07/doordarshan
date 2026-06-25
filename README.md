@@ -3,7 +3,7 @@
 Open-source video conferencing built with FastAPI for seamless real-time communication.
 
 ## Status
-Added user authentication and initial database migration.
+feat(auth): implement JWT authentication and initial database migration
 
 ## Tech Stack
 - FastAPI (backend, REST + WebSocket)
