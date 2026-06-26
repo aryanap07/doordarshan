@@ -10,6 +10,7 @@ from sqlalchemy.sql import func
 from app.db.base import Base
 
 if TYPE_CHECKING:
+    from app.models.participant import Participant
     from app.models.user import User
 
 
@@ -53,4 +54,9 @@ class Room(Base):
 
     host: Mapped[User] = relationship(
         back_populates="rooms",
+    )
+
+    participants: Mapped[list[Participant]] = relationship(
+        back_populates="room",
+        cascade="all, delete-orphan",
     )
