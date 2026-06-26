@@ -18,8 +18,8 @@ The goal of this project is to create a clean, scalable, and production-ready ba
 - [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
-- [Running the Project](#running-the-project)
 - [Database Migrations](#database-migrations)
+- [Running the Project](#running-the-project)
 - [API Overview](#api-overview)
 - [WebSocket Signaling](#websocket-signaling)
 - [Authentication](#authentication)
@@ -279,6 +279,30 @@ It ensures that:
 
 ---
 
+# Database Migrations
+
+Create migration
+
+```bash
+make revision
+```
+
+Apply migrations
+
+```bash
+make migrate
+```
+
+Rollback
+
+```bash
+make downgrade
+```
+
+Alembic keeps the database schema synchronized with your SQLAlchemy models.
+
+---
+
 # Running the Project
 
 Development server
@@ -310,30 +334,6 @@ ReDoc
 ```
 http://127.0.0.1:8000/redoc
 ```
-
----
-
-# Database Migrations
-
-Create migration
-
-```bash
-make revision
-```
-
-Apply migrations
-
-```bash
-make migrate
-```
-
-Rollback
-
-```bash
-make downgrade
-```
-
-Alembic keeps the database schema synchronized with your SQLAlchemy models.
 
 ---
 
