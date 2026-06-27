@@ -15,8 +15,14 @@ class MeetingBase(BaseModel):
         default=None,
         max_length=500,
     )
-    room_id: int | None = None
-    scheduled_at: datetime | None = None
+    room_id: int | None = Field(
+        default=None,
+        description="Optional room ID associated with the meeting.",
+    )
+    scheduled_at: datetime | None = Field(
+        default=None,
+        description="Optional scheduled time for the meeting.",
+    )
 
 
 class MeetingCreate(MeetingBase):
@@ -33,8 +39,14 @@ class MeetingUpdate(BaseModel):
         default=None,
         max_length=500,
     )
-    room_id: int | None = None
-    scheduled_at: datetime | None = None
+    room_id: int | None = Field(
+        default=None,
+        description="Optional room ID associated with the meeting.",
+    )
+    scheduled_at: datetime | None = Field(
+        default=None,
+        description="Optional scheduled time for the meeting.",
+    )
     is_active: bool | None = None
 
 
