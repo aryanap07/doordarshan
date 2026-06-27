@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 
 
 class Recording(Base):
+
     __tablename__ = "recordings"
 
     id: Mapped[int] = mapped_column(
@@ -25,11 +26,13 @@ class Recording(Base):
 
     meeting_id: Mapped[int] = mapped_column(
         ForeignKey("meetings.id"),
+        index=True,
         nullable=False,
     )
 
     creator_id: Mapped[int] = mapped_column(
         ForeignKey("users.id"),
+        index=True,
         nullable=False,
     )
 

@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
 
 class Meeting(Base):
+
     __tablename__ = "meetings"
 
     id: Mapped[int] = mapped_column(
@@ -36,17 +37,20 @@ class Meeting(Base):
 
     host_id: Mapped[int] = mapped_column(
         ForeignKey("users.id"),
+        index=True,
         nullable=False,
     )
 
     room_id: Mapped[int | None] = mapped_column(
         ForeignKey("rooms.id"),
+        index=True,
         nullable=True,
     )
 
     is_active: Mapped[bool] = mapped_column(
         Boolean,
         default=True,
+        index=True,
         nullable=False,
     )
 

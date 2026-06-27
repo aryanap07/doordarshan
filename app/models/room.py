@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
 
 class Room(Base):
+
     __tablename__ = "rooms"
 
     id: Mapped[int] = mapped_column(
@@ -27,8 +28,8 @@ class Room(Base):
     room_code: Mapped[str] = mapped_column(
         String(8),
         unique=True,
-        nullable=False,
         index=True,
+        nullable=False,
     )
 
     title: Mapped[str] = mapped_column(
@@ -39,11 +40,13 @@ class Room(Base):
     is_active: Mapped[bool] = mapped_column(
         Boolean,
         default=True,
+        index=True,
         nullable=False,
     )
 
     host_id: Mapped[int] = mapped_column(
         ForeignKey("users.id"),
+        index=True,
         nullable=False,
     )
 

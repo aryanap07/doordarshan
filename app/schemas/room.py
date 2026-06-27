@@ -5,20 +5,32 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class RoomCreate(BaseModel):
+class RoomBase(BaseModel):
     title: str = Field(
+        ...,
         min_length=1,
         max_length=100,
-        examples=["AI Study Group"],
     )
 
 
-class RoomResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+class RoomCreate(RoomBase):
+    pass
 
+
+class RoomUpdate(BaseModel):
+    title: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=100,
+    )
+    is_active: bool | None = None
+
+
+class RoomResponse(RoomBase):
     id: int
     room_code: str
-    title: str
-    is_active: bool
     host_id: int
+    is_active: bool
     created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)

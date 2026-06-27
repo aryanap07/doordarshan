@@ -1,10 +1,19 @@
-from pydantic import BaseModel, ConfigDict, EmailStr
+from __future__ import annotations
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class UserCreate(BaseModel):
-    username: str
+    username: str = Field(
+        ...,
+        min_length=3,
+        max_length=50,
+    )
     email: EmailStr
-    password: str
+    password: str = Field(
+        ...,
+        min_length=8,
+    )
 
 
 class UserLogin(BaseModel):
@@ -13,11 +22,11 @@ class UserLogin(BaseModel):
 
 
 class UserResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     username: str
     email: EmailStr
-
-    model_config = ConfigDict(from_attributes=True)
 
 
 class Token(BaseModel):

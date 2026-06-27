@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 
 
 class Participant(Base):
+
     __tablename__ = "participants"
 
     id: Mapped[int] = mapped_column(
@@ -25,11 +26,13 @@ class Participant(Base):
 
     room_id: Mapped[int] = mapped_column(
         ForeignKey("rooms.id"),
+        index=True,
         nullable=False,
     )
 
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id"),
+        index=True,
         nullable=False,
     )
 
