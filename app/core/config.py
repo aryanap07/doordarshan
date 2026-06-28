@@ -4,12 +4,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     app_name: str = Field(
-        default="DoorDarshan",
+        default="Doordarshan",
         alias="APP_NAME",
     )
 
     database_url: str = Field(
-        default="sqlite:///./doordarshan.db",
         alias="DATABASE_URL",
     )
 
