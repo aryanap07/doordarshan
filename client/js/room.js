@@ -8,7 +8,7 @@ auth.requireAuth();
 const params = new URLSearchParams(window.location.search);
 const ROOM_CODE = params.get("room");
 
-if (!ROOM_CODE) window.location.href = "dashboard.html";
+if (!ROOM_CODE) window.location.href = "dashboard";
 
 const videoGrid = document.getElementById("video-grid");
 const participantsList = document.getElementById("participants-list");
@@ -523,7 +523,7 @@ async function leaveRoom() {
     await api.leaveRoom(ROOM_CODE);
   } catch {}
 
-  window.location.href = "dashboard.html";
+  window.location.href = "dashboard";
 }
 
 window.addEventListener("beforeunload", () => {

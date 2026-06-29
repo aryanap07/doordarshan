@@ -230,7 +230,7 @@ joinCodeInput?.addEventListener("input", () => {
 });
 
 function navigateToRoom(code) {
-  window.location.href = `room.html?room=${encodeURIComponent(code)}`;
+  window.location.href = `room?room=${encodeURIComponent(code)}`;
 }
 
 const scheduleMeetingForm = document.getElementById("schedule-meeting-form");

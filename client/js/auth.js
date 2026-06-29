@@ -85,19 +85,19 @@ function avatarColor(seed = "") {
 
 function requireAuth() {
   if (!isAuthenticated()) {
-    window.location.href = "index.html";
+    window.location.href = "/";
   }
 }
 
 function redirectIfAuthed() {
   if (isAuthenticated()) {
-    window.location.href = "dashboard.html";
+    window.location.href = "dashboard";
   }
 }
 
 function logout() {
   clearToken();
-  window.location.href = "index.html";
+  window.location.href = "/";
 }
 
 window.DoordarshAuth = {
