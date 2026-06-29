@@ -1,10 +1,21 @@
 "use strict";
 
 const _ICE_SERVERS = [
-  { urls: "stun:stun.l.google.com:19302" },
-  { urls: "stun:stun1.l.google.com:19302" },
-  { urls: "stun:stun2.l.google.com:19302" },
-  { urls: "stun:stun.cloudflare.com:3478" },
+  {
+    urls: [
+      "stun:global.relay.metered.ca:80"
+    ]
+  },
+  {
+    urls: [
+      "turn:global.relay.metered.ca:80",
+      "turn:global.relay.metered.ca:80?transport=tcp",
+      "turn:global.relay.metered.ca:443",
+      "turns:global.relay.metered.ca:443?transport=tcp"
+    ],
+    username: "9d9440276d33dfb2b7d2c6b4",
+    credential: "dTSRVZEso4cvhhig"
+  }
 ];
 
 class WebRTCManager {
