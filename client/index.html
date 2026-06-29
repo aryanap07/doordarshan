@@ -108,7 +108,7 @@
         </form>
 
         <p class="auth-divider">
-          No account? <a href="register.html">Create one</a>
+          No account? <a href="register">Create one</a>
         </p>
       </div>
     </main>
@@ -172,7 +172,7 @@
             email,
           });
 
-          window.location.href = "dashboard.html";
+          window.location.href = "dashboard";
         } catch (err) {
           showError(err.message || "Invalid email or password.");
           loginBtn.disabled = false;
