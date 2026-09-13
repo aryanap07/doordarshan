@@ -6,7 +6,7 @@
 
 </div>
 
-### A modern, open-source real-time video conferencing platform built for simple, reliable communication.
+### FastAPI-based video conferencing for seamless collaboration.
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.116.1-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
