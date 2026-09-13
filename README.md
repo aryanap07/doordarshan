@@ -6,7 +6,7 @@
 
 </div>
 
-### FastAPI-based video conferencing for seamless collaboration.
+### Real-time video conferencing built with FastAPI, WebRTC, and WebSockets.
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.116.1-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -16,7 +16,7 @@
 
 Doordarshan is a full-stack video conferencing application built around real-time communication, clean interaction patterns, and a focused meeting experience.
 
-The project combines a FastAPI backend, WebSocket signaling, browser-native WebRTC, PostgreSQL, and a lightweight frontend to provide authenticated rooms, participant management, live audio/video communication, screen sharing, chat, and meeting scheduling.
+It combines a FastAPI backend, WebSocket signaling, browser-native WebRTC, PostgreSQL, and a lightweight frontend to deliver authenticated rooms, participant management, live audio/video, screen sharing, chat, and meeting scheduling.
 
 ---
 
