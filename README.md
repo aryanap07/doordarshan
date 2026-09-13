@@ -4,6 +4,8 @@
 
 **WebRTC · WebSockets · FastAPI**
 
+### *Where every meeting feels connected.*
+
 </div>
 
 ### Real-time video conferencing built with FastAPI, WebRTC, and WebSockets.
