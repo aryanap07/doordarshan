@@ -8,13 +8,13 @@
 
 ### FastAPI-based video conferencing for seamless collaboration.
 
-[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.116.1-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![WebRTC](https://img.shields.io/badge/WebRTC-Real--Time%20Media-333333?logo=webrtc&logoColor=white)](https://webrtc.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.116.1-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![WebRTC](https://img.shields.io/badge/WebRTC-Real--Time-111827?style=flat-square&logo=webrtc&logoColor=white)](https://webrtc.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE)
 
-Doordarshan is a full-stack video conferencing application designed around real-time communication, clean interaction patterns, and a focused meeting experience.
+Doordarshan is a full-stack video conferencing application built around real-time communication, clean interaction patterns, and a focused meeting experience.
 
 The project combines a FastAPI backend, WebSocket signaling, browser-native WebRTC, PostgreSQL, and a lightweight frontend to provide authenticated rooms, participant management, live audio/video communication, screen sharing, chat, and meeting scheduling.
 
