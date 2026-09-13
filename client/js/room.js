@@ -67,7 +67,10 @@ function _esc(str = "") {
 
 const media = new window.DoordarshMedia();
 const wsManager = new window.DoordarshWS();
-const rtc = new window.DoordarshRTC((payload) => wsManager.send(payload));
+const rtc = new window.DoordarshRTC(
+  (payload) => wsManager.send(payload),
+  selfUser.id,
+);
 
 media.on("stream", (stream) => {
   rtc.setLocalStream(stream);

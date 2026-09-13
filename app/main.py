@@ -6,7 +6,6 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.v1.api import api_router
-from app.api.v1.endpoints.auth import router as auth_router
 from app.ws.endpoints import router as ws_router
 
 app = FastAPI(title="Doordarshan")
@@ -21,8 +20,8 @@ app.add_middleware(
     allow_origins=[
         "http://127.0.0.1:5500",
         "http://localhost:5500",
-        "https://*.onrender.com",
     ],
+    allow_origin_regex=r"https://.*\.onrender\.com",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,7 +33,7 @@ async def home():
 
 @app.get("/login")
 async def login():
-    return FileResponse(CLIENT_DIR / "login.html")
+    return FileResponse(CLIENT_DIR / "index.html")
 
 @app.get("/register")
 async def register():
@@ -48,6 +47,5 @@ async def dashboard():
 async def room():
     return FileResponse(CLIENT_DIR / "room.html")
 
-app.include_router(auth_router, prefix="/api/v1")
 app.include_router(api_router, prefix="/api/v1")
 app.include_router(ws_router)

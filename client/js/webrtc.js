@@ -15,14 +15,19 @@ async function loadIceServers() {
 }
 
 class WebRTCManager {
-  constructor(sendFn) {
+  constructor(sendFn, selfUserId) {
     this._send = sendFn;
+    this._selfUserId = selfUserId;
     this._peers = new Map();
     this._localStream = null;
     this._handlers = {};
     this._pendingCandidates = new Map();
     this._makingOffer = new Set();
     this._ignoreOffer = new Set();
+  }
+
+  _isPolite(remoteUserId) {
+    return this._selfUserId < remoteUserId;
   }
 
   on(event, handler) {
@@ -136,11 +141,18 @@ class WebRTCManager {
 
   async handleOffer(fromUserId, sdp) {
     const pc = this._createPeer(fromUserId);
+    const polite = this._isPolite(fromUserId);
     const offerCollision =
       this._makingOffer.has(fromUserId) || pc.signalingState !== "stable";
 
+    this._ignoreOffer.delete(fromUserId);
+
     if (offerCollision) {
-      return;
+      if (!polite) {
+        this._ignoreOffer.add(fromUserId);
+        return;
+      }
+      await pc.setLocalDescription({ type: "rollback" });
     }
 
     await pc.setRemoteDescription({ type: "offer", sdp });
@@ -167,6 +179,7 @@ class WebRTCManager {
     const cand = new RTCIceCandidate(candidateJson);
 
     if (!pc || !pc.remoteDescription) {
+      if (this._ignoreOffer.has(fromUserId)) return;
       const queue = this._pendingCandidates.get(fromUserId) || [];
       queue.push(cand);
       this._pendingCandidates.set(fromUserId, queue);
@@ -206,6 +219,7 @@ class WebRTCManager {
     }
     this._pendingCandidates.delete(userId);
     this._makingOffer.delete(userId);
+    this._ignoreOffer.delete(userId);
   }
 
   closeAll() {
@@ -213,6 +227,7 @@ class WebRTCManager {
     this._peers.clear();
     this._pendingCandidates.clear();
     this._makingOffer.clear();
+    this._ignoreOffer.clear();
   }
 
   getPeerState(userId) {
