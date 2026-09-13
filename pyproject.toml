@@ -1,7 +1,7 @@
 [project]
 name = "doordarshan"
 version = "1.0.0"
-description = "An open-source video conferencing application built with FastAPI for fast and reliable real-time communication."
+description = "Real-time video conferencing built with FastAPI, WebRTC, and WebSockets."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
