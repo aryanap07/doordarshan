@@ -6,8 +6,6 @@
 
 ### *Where every meeting feels connected.*
 
-</div>
-
 ### Real-time video conferencing built with FastAPI, WebRTC, and WebSockets.
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
@@ -15,6 +13,9 @@
 [![WebRTC](https://img.shields.io/badge/WebRTC-Real--Time-111827?style=flat-square&logo=webrtc&logoColor=white)](https://webrtc.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE)
+</div>
+
+
 
 Doordarshan is a full-stack video conferencing application built around real-time communication, clean interaction patterns, and a focused meeting experience.
 
