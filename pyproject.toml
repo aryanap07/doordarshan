@@ -27,17 +27,17 @@ classifiers = [
 ]
 
 dependencies = [
-    "fastapi==0.116.1",
-    "uvicorn[standard]==0.35.0",
-    "sqlalchemy==2.0.41",
-    "alembic==1.16.4",
-    "pydantic-settings==2.10.1",
+    "fastapi==0.152.0",
+    "uvicorn[standard]==0.54.0",
+    "sqlalchemy==2.1.5",
+    "alembic==1.20.0",
+    "pydantic-settings==2.16.1",
     "email-validator==2.3.0",
     "python-jose[cryptography]==3.5.0",
-    "pwdlib[argon2]==0.3.0",
-    "python-multipart==0.0.20",
-    "websockets==15.0.1",
-    "psycopg[binary]==3.3.4",
+    "pwdlib[argon2]==0.3.1",
+    "python-multipart==0.0.32",
+    "websockets==17.3",
+    "psycopg[binary]==3.3.6",
 ]
 
 [project.optional-dependencies]
