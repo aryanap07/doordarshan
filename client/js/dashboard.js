@@ -9,10 +9,16 @@ function showToast(message, type = "info", duration = 3500) {
   const icons = { success: "✓", error: "✕", info: "ℹ" };
   const el = document.createElement("div");
   el.className = `toast toast-${type}`;
-  el.innerHTML = `
-    <span class="toast-icon">${icons[type]}</span>
-    <span>${message}</span>
-  `;
+
+  const iconEl = document.createElement("span");
+  iconEl.className = "toast-icon";
+  iconEl.textContent = icons[type] || icons.info;
+
+  const messageEl = document.createElement("span");
+  messageEl.textContent = message;
+
+  el.appendChild(iconEl);
+  el.appendChild(messageEl);
   toastContainer.appendChild(el);
 
   setTimeout(() => {
