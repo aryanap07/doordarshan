@@ -27,10 +27,10 @@ classifiers = [
 ]
 
 dependencies = [
-    "fastapi==0.152.0",
+    "fastapi==0.161.1",
     "uvicorn[standard]==0.54.0",
-    "sqlalchemy==2.1.5",
-    "alembic==1.20.0",
+    "sqlalchemy==2.1.6",
+    "alembic==1.20.1",
     "pydantic-settings==2.16.1",
     "email-validator==2.3.0",
     "python-jose[cryptography]==3.5.0",
