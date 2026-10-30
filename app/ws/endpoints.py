@@ -120,12 +120,7 @@ async def websocket_signaling(
                 )
 
             except GracefulDisconnect:
-                logger.info(
-                    "User %s (%s) left room %s",
-                    username,
-                    user_id,
-                    room_code,
-                )
+                logger.info("Participant left: user_id=%s", user_id)
                 break
 
             except TargetNotFoundError as exc:
@@ -147,11 +142,7 @@ async def websocket_signaling(
                 )
 
             except Exception:
-                logger.exception(
-                    "Dispatch error: user=%s room=%s",
-                    user_id,
-                    room_code,
-                )
+                logger.exception("Dispatch error: user_id=%s", user_id)
                 await send_json(
                     websocket,
                     ErrorMessage(
@@ -161,18 +152,10 @@ async def websocket_signaling(
                 )
 
     except WebSocketDisconnect:
-        logger.info(
-            "Disconnected: user=%s room=%s",
-            user_id,
-            room_code,
-        )
+        logger.info("WebSocket disconnected: user_id=%s", user_id)
 
     except Exception:
-        logger.exception(
-            "WebSocket loop failed: user=%s room=%s",
-            user_id,
-            room_code,
-        )
+        logger.exception("WebSocket loop failed: user_id=%s", user_id)
 
     finally:
         await heartbeat_manager.stop(websocket)

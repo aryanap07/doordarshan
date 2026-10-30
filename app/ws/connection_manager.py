@@ -57,10 +57,8 @@ class ConnectionManager:
         self._reverse[websocket] = participant
 
         logger.info(
-            "User %s (%s) joined room %s [%d participants]",
-            username,
+            "Participant joined: user_id=%s participant_count=%d",
             user_id,
-            room_code,
             len(room),
         )
 
@@ -102,10 +100,8 @@ class ConnectionManager:
             self._rooms.pop(participant.room_code, None)
 
         logger.info(
-            "User %s (%s) left room %s [%d participants]",
-            participant.username,
+            "Participant left: user_id=%s participant_count=%d",
             participant.user_id,
-            participant.room_code,
             len(room),
         )
 
@@ -159,11 +155,11 @@ class ConnectionManager:
 
         for participant, result in zip(participants, results, strict=True):
             if isinstance(result, Exception):
-                logger.exception(
-                    "Broadcast failed for user %s in room %s",
+                logger.error(
+                    "Broadcast failed: user_id=%s error_type=%s",
                     participant.user_id,
-                    room_code,
-                    exc_info=result,
+                    type(result).__name__,
+                    exc_info=(type(result), result, result.__traceback__),
                 )
 
     def get_participant_by_ws(
