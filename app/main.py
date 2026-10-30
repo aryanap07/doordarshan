@@ -27,25 +27,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def home():
     return FileResponse(CLIENT_DIR / "index.html")
+
 
 @app.get("/login")
 async def login():
     return FileResponse(CLIENT_DIR / "index.html")
 
+
 @app.get("/register")
 async def register():
     return FileResponse(CLIENT_DIR / "register.html")
+
 
 @app.get("/dashboard")
 async def dashboard():
     return FileResponse(CLIENT_DIR / "dashboard.html")
 
+
 @app.get("/room")
 async def room():
     return FileResponse(CLIENT_DIR / "room.html")
+
 
 app.include_router(api_router, prefix="/api/v1")
 app.include_router(ws_router)

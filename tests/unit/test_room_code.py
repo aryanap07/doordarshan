@@ -2,7 +2,6 @@ import re
 
 import pytest
 
-
 from app.core.room_code import ALPHABET, generate_room_code
 
 pytestmark = pytest.mark.unit

@@ -2,7 +2,6 @@ import pytest
 from fastapi.testclient import TestClient
 from starlette.websockets import WebSocketDisconnect
 
-
 from app.models import User
 
 pytestmark = pytest.mark.websocket

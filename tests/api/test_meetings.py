@@ -1,7 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
 
-
 from app.models import User
 
 pytestmark = pytest.mark.api

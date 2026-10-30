@@ -9,10 +9,13 @@
 ### Real-time video conferencing built with FastAPI, WebRTC, and WebSockets.
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.116.1-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.162.0-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![WebRTC](https://img.shields.io/badge/WebRTC-Real--Time-111827?style=flat-square&logo=webrtc&logoColor=white)](https://webrtc.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE)
+[![CI](https://github.com/aryanap07/doordarshan/actions/workflows/ci.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/aryanap07/doordarshan/actions/workflows/codeql.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/codeql.yml)
+[![Dependency Security Audit](https://github.com/aryanap07/doordarshan/actions/workflows/security.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/security.yml)
 </div>
 
 
@@ -121,7 +124,7 @@ The meeting interface is designed around the active call:
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│ Doordarshan     Room Name / Code          Live • Participants│
+│ Doordarshan     Room Name / Code         Live • Participants│
 ├───────────────────────────────────────────────┬─────────────┤
 │                                               │             │
 │                 Video Grid                    │   People    │
@@ -129,7 +132,7 @@ The meeting interface is designed around the active call:
 │                                               │             │
 │                                               │             │
 ├───────────────────────────────────────────────┴─────────────┤
-│       Mute     Camera     Share     Chat          Leave      │
+│       Mute     Camera     Share     Chat          Leave     │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -179,8 +182,8 @@ Doordarshan follows a layered backend architecture that keeps transport, applica
 
 ```text
                          ┌─────────────────────┐
-                         │      Browser UI      │
-                         │ HTML / CSS / JS      │
+                         │      Browser UI     │
+                         │ HTML / CSS / JS     │
                          └──────────┬──────────┘
                                     │
                  ┌──────────────────┴──────────────────┐
@@ -337,6 +340,12 @@ doordarshan/
 │   ├── api/
 │   └── ws/
 │
+├── .github/
+│   ├── dependabot.yml
+│   └── workflows/
+│       ├── ci.yml
+│       ├── codeql.yml
+│       └── security.yml
 ├── .env.example
 ├── alembic.ini
 ├── Makefile
@@ -635,7 +644,7 @@ tests/
 Run the test suite:
 
 ```bash
-pytest
+pytest -ra
 ```
 
 Run tests with coverage:
@@ -649,6 +658,21 @@ Generate an HTML coverage report:
 ```bash
 make coverage
 ```
+
+### Continuous Integration
+
+GitHub Actions runs the project's automated checks on pushes and pull requests targeting `main`, `master`, or `develop`.
+
+The CI workflow includes:
+
+- Ruff linting
+- Automated tests on Python 3.11, 3.12, and 3.13
+- Test and coverage report artifacts
+- PostgreSQL 16 migration smoke tests
+
+Separate workflows provide CodeQL code scanning and dependency security auditing. These checks report findings independently; a successful test run does not by itself establish that every dependency is vulnerability-free.
+
+To inspect workflow results, visit the [GitHub Actions page](https://github.com/aryanap07/doordarshan/actions).
 
 ---
 
@@ -728,8 +752,10 @@ Doordarshan includes several foundational security measures:
 - Rate-limiting middleware
 - Configurable token expiration
 - Environment-based secret management
+- CodeQL static analysis through GitHub Actions
+- Automated Python dependency vulnerability auditing
 
-Production deployments should use HTTPS/WSS, strong secrets, restricted database access, and correctly configured TURN credentials.
+Production deployments should use HTTPS/WSS, strong secrets, restricted database access, and correctly configured TURN credentials. Keep dependencies updated and review security-audit findings before releasing changes.
 
 ---
 

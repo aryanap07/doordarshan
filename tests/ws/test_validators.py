@@ -2,7 +2,6 @@ import json
 
 import pytest
 
-
 from app.ws.constants import MAX_MESSAGE_SIZE
 from app.ws.exceptions import MessageValidationError
 from app.ws.messages import (
@@ -53,7 +52,7 @@ def test_parse_message_ignores_unknown_extra_fields() -> None:
     assert isinstance(parsed, PingMessage)
 
 
-@pytest.mark.parametrize("raw", ["{", "not-json", "[1, 2]", "null", "\"text\""])
+@pytest.mark.parametrize("raw", ["{", "not-json", "[1, 2]", "null", '"text"'])
 def test_parse_message_rejects_malformed_or_non_object_json(raw: str) -> None:
     with pytest.raises(MessageValidationError):
         parse_message(raw)

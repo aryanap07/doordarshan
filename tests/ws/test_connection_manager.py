@@ -4,7 +4,6 @@ from typing import Any
 
 import pytest
 
-
 from app.ws.connection_manager import ConnectionManager
 from app.ws.messages import DirectMessage, ParticipantJoinedMessage
 

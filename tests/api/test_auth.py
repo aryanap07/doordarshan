@@ -4,7 +4,6 @@ from fastapi.testclient import TestClient
 pytestmark = pytest.mark.api
 
 
-
 def test_register_creates_user_without_exposing_password_hash(
     client: TestClient,
 ) -> None:
