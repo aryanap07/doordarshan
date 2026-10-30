@@ -8,14 +8,9 @@
 
 ### Real-time video conferencing built with FastAPI, WebRTC, and WebSockets.
 
-[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.162.0-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![WebRTC](https://img.shields.io/badge/WebRTC-Real--Time-111827?style=flat-square&logo=webrtc&logoColor=white)](https://webrtc.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE)
-[![CI](https://github.com/aryanap07/doordarshan/actions/workflows/ci.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/aryanap07/doordarshan/actions/workflows/codeql.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/codeql.yml)
-[![Dependency Security Audit](https://github.com/aryanap07/doordarshan/actions/workflows/security.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/security.yml)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-0.162.0-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![WebRTC](https://img.shields.io/badge/WebRTC-Real--Time-111827?style=flat-square&logo=webrtc&logoColor=white)](https://webrtc.org/) [![WebSocket](https://img.shields.io/badge/WebSocket-Real--Time-4A5568?style=flat-square&logo=socketdotio&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/) [![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE)
+
+[![CI](https://github.com/aryanap07/doordarshan/actions/workflows/ci.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/ci.yml) [![CodeQL](https://github.com/aryanap07/doordarshan/actions/workflows/codeql.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/codeql.yml) [![Dependency Security Audit](https://github.com/aryanap07/doordarshan/actions/workflows/security.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/security.yml)
 </div>
 
 
