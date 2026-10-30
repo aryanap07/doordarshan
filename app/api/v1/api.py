@@ -1,6 +1,14 @@
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth, meetings, participants, recordings, rooms, users, ice
+from app.api.v1.endpoints import (
+    auth,
+    ice,
+    meetings,
+    participants,
+    recordings,
+    rooms,
+    users,
+)
 
 api_router = APIRouter()
 
