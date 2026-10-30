@@ -7,7 +7,7 @@ requires-python = ">=3.11"
 license = { text = "MIT" }
 
 authors = [
-    { name = "Aryan Patel & Doordarshan Contributors" },
+    { name = "Doordarshan Contributors" },
 ]
 
 keywords = [
@@ -45,6 +45,7 @@ dev = [
     "pytest>=8.4.0",
     "pytest-asyncio>=1.4.0",
     "pytest-cov>=6.2.0",
+    "coverage[toml]>=7.6.0",
     "httpx>=0.28.0",
     "black>=25.1.0",
     "ruff>=0.12.0",
@@ -86,12 +87,6 @@ module = "app.core.config"
 disable_error_code = [
     "call-arg",
 ]
-
-[tool.pytest.ini_options]
-testpaths = [
-    "tests",
-]
-asyncio_mode = "auto"
 
 [tool.coverage.run]
 source = [

@@ -1,6 +1,6 @@
 .PHONY: \
 	help install dev run serve shell \
-	test coverage format lint check \
+	test test-unit test-api test-ws coverage format lint typecheck check \
 	revision migrate downgrade reset-db \
 	build publish freeze clean
 
@@ -12,38 +12,23 @@ MODULE := app
 SRC := app tests
 
 help:
-	@echo ""
-	@echo "================ Doordarshan Commands ================"
-	@echo ""
-	@echo "Development"
-	@echo "  make install      Install project"
-	@echo "  make dev          Install project with development dependencies"
-	@echo "  make run          Run FastAPI development server"
-	@echo "  make serve        Run FastAPI without auto reload"
-	@echo "  make shell        Open Python shell"
-	@echo ""
-	@echo "Quality"
-	@echo "  make format       Format source code"
-	@echo "  make lint         Run linting and type checking"
-	@echo "  make test         Run tests"
-	@echo "  make coverage     Run tests with HTML coverage report"
-	@echo "  make check        Run format, lint, and tests"
-	@echo ""
-	@echo "Database"
-	@echo "  make revision     Create Alembic migration"
-	@echo "  make migrate      Apply migrations"
-	@echo "  make downgrade    Revert last migration"
-	@echo "  make reset-db     Reset database to latest migration"
-	@echo ""
-	@echo "Packaging"
-	@echo "  make build        Build distribution"
-	@echo "  make publish      Publish package to PyPI"
-	@echo "  make freeze       Export requirements.txt"
-	@echo ""
-	@echo "Maintenance"
-	@echo "  make clean        Remove build/cache files"
-	@echo ""
-	@echo "======================================================"
+	@echo "Doordarshan development commands"
+	@echo "  make install     Install runtime dependencies"
+	@echo "  make dev         Install development dependencies"
+	@echo "  make run         Run the development server"
+	@echo "  make test        Run the complete test suite"
+	@echo "  make test-unit   Run unit tests only"
+	@echo "  make test-api    Run HTTP API tests only"
+	@echo "  make test-ws     Run WebSocket tests only"
+	@echo "  make coverage    Run tests and generate coverage reports"
+	@echo "  make lint        Run Ruff checks"
+	@echo "  make format      Format source and test files"
+	@echo "  make typecheck   Run mypy"
+	@echo "  make check       Run lint and tests without modifying files"
+	@echo "  make migrate     Apply Alembic migrations"
+	@echo "  make revision    Create an Alembic migration"
+	@echo "  make build       Build wheel and source distributions"
+	@echo "  make clean       Remove generated files"
 
 install:
 	$(PIP) install .
@@ -61,23 +46,35 @@ shell:
 	$(PYTHON)
 
 test:
-	pytest --cov=$(MODULE) --cov-report=term-missing
+	pytest -ra
+
+test-unit:
+	pytest -ra -m unit
+
+test-api:
+	pytest -ra -m api
+
+test-ws:
+	pytest -ra -m websocket
 
 coverage:
-	pytest \
+	pytest -ra \
 		--cov=$(MODULE) \
-		--cov-report=term-missing \
-		--cov-report=html
+		--cov-report=term-missing:skip-covered \
+		--cov-report=html \
+		--cov-report=xml
+
+lint:
+	ruff check $(SRC)
 
 format:
 	black $(SRC)
 	ruff check $(SRC) --fix
 
-lint:
-	ruff check $(SRC)
+typecheck:
 	mypy app
 
-check: format lint test
+check: lint test
 
 revision:
 	@read -p "Migration name: " name; \
@@ -103,16 +100,6 @@ freeze:
 	$(PIP) freeze > requirements.txt
 
 clean:
-	find . -type d -name "__pycache__" -exec rm -rf {} +
-	find . -type d -name ".pytest_cache" -exec rm -rf {} +
-	find . -type d -name ".mypy_cache" -exec rm -rf {} +
-	find . -type d -name ".ruff_cache" -exec rm -rf {} +
-	find . -type d -name ".tox" -exec rm -rf {} +
-	find . -type d -name ".nox" -exec rm -rf {} +
-	find . -type d -name "htmlcov" -exec rm -rf {} +
-	find . -type f -name "*.py[co]" -delete
-	find . -type f -name ".coverage*" -delete
-	rm -rf \
-		build \
-		dist \
-		*.egg-info
+	find . -type d \( -name "__pycache__" -o -name ".pytest_cache" -o -name ".mypy_cache" -o -name ".ruff_cache" -o -name ".tox" -o -name ".nox" -o -name "htmlcov" \) -prune -exec rm -rf {} +
+	find . -type f \( -name "*.py[co]" -o -name ".coverage*" \) -delete
+	rm -rf build dist *.egg-info junit.xml coverage.xml
