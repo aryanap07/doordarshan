@@ -14,4 +14,4 @@ Project scaffolding in progress. Docker setup intentionally deferred.
 - PostgreSQL (planned)
 
 ## Structure
-See project tree for the layout of `app/`, `alembic/`, `tests/`, and `scripts/`.
+See project tree for the layout of `app/`, `alembic/`, `tests/`, and `scripts/`..
