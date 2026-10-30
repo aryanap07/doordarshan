@@ -1,7 +1,7 @@
 from datetime import UTC, datetime, timedelta
 
+import jwt
 import pytest
-from jose import jwt
 
 from app.core.config import settings
 from app.core.security import (
@@ -70,6 +70,31 @@ def test_token_signed_with_unconfigured_algorithm_is_rejected() -> None:
         {"sub": "42", "exp": datetime.now(UTC) + timedelta(minutes=5)},
         settings.secret_key,
         algorithm="HS384",
+    )
+
+    with pytest.raises(ValueError, match="Invalid or expired token"):
+        decode_access_token(token)
+
+
+def test_token_signed_with_wrong_secret_is_rejected() -> None:
+    token = jwt.encode(
+        {"sub": "42", "exp": datetime.now(UTC) + timedelta(minutes=5)},
+        "a-different-secret-key-0123456789-0123456789",
+        algorithm=settings.algorithm,
+    )
+
+    with pytest.raises(ValueError, match="Invalid or expired token"):
+        decode_access_token(token)
+
+
+@pytest.mark.parametrize("missing_claim", ["exp", "sub"])
+def test_token_missing_required_claim_is_rejected(missing_claim: str) -> None:
+    claims = {"sub": "42", "exp": datetime.now(UTC) + timedelta(minutes=5)}
+    del claims[missing_claim]
+    token = jwt.encode(
+        claims,
+        settings.secret_key,
+        algorithm=settings.algorithm,
     )
 
     with pytest.raises(ValueError, match="Invalid or expired token"):

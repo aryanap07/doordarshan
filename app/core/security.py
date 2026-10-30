@@ -1,7 +1,7 @@
 from datetime import UTC, datetime, timedelta
-from typing import Any, cast
+from typing import Any
 
-from jose import JWTError, jwt
+import jwt
 from pwdlib import PasswordHash
 
 from app.core.config import settings
@@ -35,26 +35,23 @@ def create_access_token(
         "exp": expire,
     }
 
-    token = jwt.encode(
+    return jwt.encode(
         payload,
         settings.secret_key,
         algorithm=settings.algorithm,
     )
-
-    return cast(str, token)
 
 
 def decode_access_token(
     token: str,
 ) -> dict[str, Any]:
     try:
-        payload = jwt.decode(
+        return jwt.decode(
             token,
             settings.secret_key,
             algorithms=[settings.algorithm],
+            options={"require": ["exp", "sub"]},
         )
 
-        return cast(dict[str, Any], payload)
-
-    except JWTError as exc:
+    except jwt.PyJWTError as exc:
         raise ValueError("Invalid or expired token") from exc

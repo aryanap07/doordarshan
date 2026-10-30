@@ -50,12 +50,13 @@ uploaded as workflow artifacts.
 
 `.github/workflows/security.yml` runs `pip-audit` on pull requests, pushes to
 main/master, and weekly. This is intentionally a blocking security check: it
-will report known vulnerabilities in the resolved dependency environment. In
-particular, the current `python-jose==3.5.0` pin is the subject of the open
-Dependabot security alert and must not be treated as remediated just because
-the JWT decoder restricts its accepted algorithm. Resolve the dependency alert
-through a verified patched release or a tested migration before expecting the
-security workflow to pass.
+fails the build when the resolved dependency environment contains a known
+vulnerability. JWT handling uses `PyJWT`. The project previously used
+`python-jose`, which has no patched release for its open advisories and pulls
+in the unpatched `ecdsa` package, so it was replaced rather than pinned.
+`decode_access_token` accepts only the configured algorithm and requires the
+`exp` and `sub` claims. The "marked as editable" entry in the audit output is
+an informational skip for the project itself (`--skip-editable`), not a failure.
 
 `.github/workflows/codeql.yml` performs CodeQL advanced analysis for the
 Python backend and JavaScript frontend. Before using this workflow, switch the
