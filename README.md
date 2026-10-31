@@ -8,14 +8,41 @@
 
 ### Real-time video conferencing built with FastAPI, WebRTC, and WebSockets.
 
-[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-0.162.0-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![WebRTC](https://img.shields.io/badge/WebRTC-Real--Time-111827?style=flat-square&logo=webrtc&logoColor=white)](https://webrtc.org/) [![WebSocket](https://img.shields.io/badge/WebSocket-Real--Time-111827?style=flat-square&logo=socketdotio&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/) [![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-0.162.0-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![WebRTC](https://img.shields.io/badge/WebRTC-Real--Time-111827?style=flat-square&logo=webrtc&logoColor=white)](https://webrtc.org/) [![WebSocket](https://img.shields.io/badge/WebSocket-Real--Time-111827?style=flat-square&logo=socketdotio&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/) [![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE) [![CI](https://github.com/aryanap07/doordarshan/actions/workflows/ci.yml/badge.svg)](https://github.com/aryanap07/doordarshan/actions/workflows/ci.yml)
 </div>
-
-
 
 Doordarshan is a full-stack video conferencing application built around real-time communication, clean interaction patterns, and a focused meeting experience.
 
 It combines a FastAPI backend, WebSocket signaling, browser-native WebRTC, PostgreSQL, and a lightweight frontend to deliver authenticated rooms, participant management, live audio/video, screen sharing, chat, and meeting scheduling.
+
+**Project guides:** [Contributing](CONTRIBUTING.md) · [Testing](TESTING.md) · [Security](SECURITY.md) · [License](LICENSE)
+
+## Contents
+
+- [Overview](#overview)
+- [Core Features](#core-features)
+- [UI/UX](#uiux)
+- [Technology Stack](#technology-stack)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Core Functionality](#core-functionality)
+- [API Surface](#api-surface)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Database Setup](#database-setup)
+- [Run Locally](#run-locally)
+- [Run with Docker Compose](#run-with-docker-compose)
+- [Development Commands](#development-commands)
+- [Testing](#testing)
+- [Continuous Integration](#continuous-integration)
+- [Project Workflow](#project-workflow)
+- [Deployment](#deployment)
+- [Security Considerations](#security-considerations)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Developer](#developer)
+- [Project Status](#project-status)
 
 ---
 
@@ -221,6 +248,17 @@ Doordarshan follows a layered backend architecture that keeps transport, applica
 
 ```text
 doordarshan/
+├── .github/
+│   ├── dependabot.yml
+│   └── workflows/
+│       ├── ci.yml
+│       ├── codeql.yml
+│       └── security.yml
+│
+├── alembic/
+│   └── versions/
+│       └── 16431bb0cc81_initial_postgresql_schema.py
+│
 ├── app/
 │   ├── api/
 │   │   ├── dependencies.py
@@ -310,6 +348,10 @@ doordarshan/
 │   │
 │   └── main.py
 │
+├── assets/
+│   ├── doordarshan_template.png
+│   └── doordarshan_template.svg
+│
 ├── client/
 │   ├── css/
 │   │   └── style.css
@@ -326,24 +368,26 @@ doordarshan/
 │   ├── register.html
 │   └── room.html
 │
-├── alembic/
-│   └── versions/
-│
 ├── tests/
 │   ├── api/
+│   ├── unit/
 │   └── ws/
 │
-├── .github/
-│   ├── dependabot.yml
-│   └── workflows/
-│       ├── ci.yml
-│       ├── codeql.yml
-│       └── security.yml
+├── .dockerignore
 ├── .env.example
-├── alembic.ini
+├── .gitignore
+├── CONTRIBUTING.md
+├── Dockerfile
+├── FUNDING.yml
+├── LICENSE
 ├── Makefile
+├── README.md
+├── SECURITY.md
+├── TESTING.md
+├── alembic.ini
+├── compose.yaml
 ├── pyproject.toml
-└── LICENSE
+└── pytest.ini
 ```
 
 ---
@@ -456,6 +500,8 @@ Make sure the following are installed:
 - Git
 - A modern browser with WebRTC support
 
+Camera, microphone, and screen-sharing access require a secure browser context. `localhost` is treated as secure for local development; deployed environments should use HTTPS.
+
 For production deployments, a PostgreSQL provider such as Neon can be used.
 
 ---
@@ -520,7 +566,7 @@ SECRET_KEY=your_secret_key_here
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 
-DATABASE_URL=postgresql+psycopg://USER:PASSWORD@HOST/DATABASE?sslmode=require
+DATABASE_URL=postgresql+psycopg://USER:PASSWORD@HOST:5432/DATABASE
 
 METERED_USERNAME=YOUR_METERED_USERNAME
 METERED_CREDENTIAL=YOUR_METERED_CREDENTIAL
@@ -537,6 +583,14 @@ METERED_CREDENTIAL=YOUR_METERED_CREDENTIAL
 | `DATABASE_URL` | PostgreSQL connection string |
 | `METERED_USERNAME` | TURN service username |
 | `METERED_CREDENTIAL` | TURN service credential |
+
+For managed PostgreSQL providers that require encrypted connections, add the provider-recommended SSL options (for example, `sslmode=require`) to the connection URL.
+
+Generate a strong application secret with:
+
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(48))"
+```
 
 Do not commit `.env` or production credentials to the repository.
 
@@ -562,6 +616,8 @@ Revert the latest migration:
 alembic downgrade -1
 ```
 
+**Caution:** Downgrading or running `make reset-db` can remove application data. Use these commands only when you understand the migration effects and are working with a disposable or backed-up database.
+
 ---
 
 ## Run Locally
@@ -584,41 +640,42 @@ The application will be available at:
 http://127.0.0.1:8000
 ```
 
----
+## Run with Docker Compose
 
-
-## Docker
-
-Doordarshan can be run as a containerized FastAPI application with PostgreSQL as a separate service. The image includes the backend, Alembic migration files, and the HTML, CSS, and JavaScript client served by FastAPI.
+Docker Compose runs the FastAPI application and PostgreSQL as separate services. The application image contains the backend, the static frontend, and the Alembic migration files; PostgreSQL remains in its own container with a persistent named volume.
 
 ### Requirements
 
-- Docker Engine or Docker Desktop
-- Docker Compose plugin
+- Docker Engine
+- Docker Compose v2 (`docker compose`)
 
 ### Configure the environment
 
-Create a local environment file:
+Create your local environment file:
+
+#### Linux / macOS
 
 ```bash
 cp .env.example .env
 ```
 
-On PowerShell:
+#### Windows PowerShell
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Set the required values in `.env` before starting the application:
+Update `.env` before starting the services. Set a strong, unique `SECRET_KEY`, your Metered TURN credentials, and a long URL-safe `POSTGRES_PASSWORD`. Keep `.env` private and never commit it.
 
-- `SECRET_KEY`: generate a strong signing key with `python -c "import secrets; print(secrets.token_urlsafe(48))"`.
-- `METERED_USERNAME` and `METERED_CREDENTIAL`: enter the credentials for your configured Metered TURN service.
-- `POSTGRES_PASSWORD`: set a long URL-safe password. A value generated with `secrets.token_urlsafe(32)` is suitable.
+A URL-safe PostgreSQL password is recommended because Compose builds `DATABASE_URL` from the individual database variables. Avoid reserved URL characters in `POSTGRES_PASSWORD` unless you percent-encode them in the connection URL.
 
-Do not commit `.env` or publish its contents. The Compose configuration supplies the container with a database URL that points to the internal `db` service. The `DATABASE_URL` value in `.env` is retained for running the application directly on the host or against an external database.
+Generate a secret key with Python:
 
-### Build, migrate, and start
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(48))"
+```
+
+### Build and migrate
 
 Build the application image:
 
@@ -638,91 +695,30 @@ Start the application and database:
 docker compose up -d
 ```
 
-Open the application at `http://localhost:8000`. The API documentation is available at `http://localhost:8000/docs`.
-
-Useful commands:
+Inspect service status and logs:
 
 ```bash
 docker compose ps
 docker compose logs -f app
-docker compose logs -f db
+```
+
+Open the application at `http://localhost:8000`. The default Compose port binding is restricted to the local machine (`127.0.0.1`). Put a properly configured HTTPS reverse proxy in front of the service before exposing it publicly.
+
+Stop the services while retaining database data:
+
+```bash
 docker compose down
 ```
 
-The PostgreSQL data is stored in the `postgres_data` named volume and is retained by `docker compose down`. **The command `docker compose down -v` deletes that database volume and its data.** Use it only when you intentionally want to reset the local database.
+To remove the database volume as well, use `docker compose down -v`. **This permanently deletes the PostgreSQL data stored in that volume.**
 
-To use a different local application port, change `APP_PORT` in `.env`. The Compose configuration binds the port to `127.0.0.1` by default so the development service is not exposed directly to the local network.
+### Docker image configuration
 
-### Build and run the image directly
+The image runs as a non-root user, includes a health check, and exposes port `8000`. It uses one Uvicorn worker because the current WebSocket connection manager stores room and participant state in process memory. Running multiple application workers or replicas requires shared state and coordination before it is safe to scale horizontally.
 
-Build a versioned local image:
+The application image does not contain production secrets. Supply configuration at runtime through environment variables or an environment file; do not pass credentials through Docker build arguments or bake them into the image.
 
-```bash
-docker build --build-arg APP_VERSION=1.0.2 -t doordarshan:1.0.2 .
-```
-
-For a standalone `docker run`, configure `DATABASE_URL` in the supplied environment file to point to a PostgreSQL server reachable from inside the container. `localhost` inside a container refers to the container itself, not the host machine. For local PostgreSQL container orchestration, use the Compose workflow above.
-
-```bash
-docker run --rm \
-  --env-file .env \
-  -p 127.0.0.1:8000:8000 \
-  doordarshan:1.0.2
-```
-
-Apply Alembic migrations to the configured database before serving requests:
-
-```bash
-docker run --rm --env-file .env doordarshan:1.0.2 alembic upgrade head
-```
-
-### Publish to Docker Hub
-
-Create a **public** Docker Hub repository named `doordarshan`, then authenticate:
-
-```bash
-docker login
-```
-
-For a multi-platform release targeting Linux AMD64 and ARM64, create and select a Buildx builder once:
-
-```bash
-docker buildx create --name doordarshan-builder --driver docker-container --use
-docker buildx inspect --bootstrap
-```
-
-For subsequent releases, select the existing builder with `docker buildx use doordarshan-builder`. Then build and push the versioned and `latest` tags:
-
-```bash
-docker buildx build \
-  --platform linux/amd64,linux/arm64 \
-  --build-arg APP_VERSION=1.0.2 \
-  -t YOUR_DOCKERHUB_USERNAME/doordarshan:1.0.2 \
-  -t YOUR_DOCKERHUB_USERNAME/doordarshan:latest \
-  --push \
-  .
-```
-
-Replace `YOUR_DOCKERHUB_USERNAME` with your Docker Hub namespace. Publish `latest` only when the image represents the current stable release. Verify the published image by pulling it:
-
-```bash
-docker pull YOUR_DOCKERHUB_USERNAME/doordarshan:1.0.2
-```
-
-The public repository will be available at:
-
-```text
-https://hub.docker.com/r/YOUR_DOCKERHUB_USERNAME/doordarshan
-```
-
-### Deployment notes
-
-- The container runs as a non-root user and listens on port `8000`.
-- Run Alembic migrations as a separate deployment step; the application image does not modify the database schema automatically at startup.
-- The WebSocket connection manager currently stores room participants in process memory. Run a single Uvicorn worker and a single application replica. Multiple workers or replicas can split room state and signaling until a shared coordination layer is implemented.
-- The image contains the application and browser client; it does not include PostgreSQL, a TURN server, or a media server. The configured Metered service must be reachable by clients for TURN relay when required.
-- For public deployment, place the application behind an HTTPS reverse proxy that supports WebSocket upgrades. Browsers require a secure context for camera and microphone access outside localhost.
-- Use a managed PostgreSQL service or a properly secured database deployment for production, protect credentials with the deployment platform's secret manager, and back up persistent database data.
+---
 
 ## Development Commands
 
@@ -737,6 +733,7 @@ make test
 make coverage
 make format
 make lint
+make typecheck
 make check
 make migrate
 make revision
@@ -753,24 +750,37 @@ Run the complete development check:
 make check
 ```
 
-This combines formatting, linting, type checking, and tests.
+This runs Ruff linting and the test suite. Run `make format` and `make typecheck` separately when you need formatting and static type checks.
 
 ---
 
 ## Testing
 
-Tests are organized by application layer:
+Tests are organized by application layer. See [TESTING.md](TESTING.md) for the detailed testing strategy and CI notes.
+
+The current test layout is:
 
 ```text
 tests/
 ├── api/
+│   ├── test_app.py
 │   ├── test_auth.py
 │   ├── test_meetings.py
-│   └── test_rooms.py
+│   ├── test_recordings.py
+│   ├── test_rooms.py
+│   └── test_users_and_ice.py
+│
+├── unit/
+│   ├── test_room_code.py
+│   └── test_security.py
 │
 └── ws/
-    └── test_signaling.py
+    ├── test_connection_manager.py
+    ├── test_endpoints.py
+    ├── test_signaling.py
+    └── test_validators.py
 ```
+
 
 Run the test suite:
 
@@ -792,14 +802,15 @@ make coverage
 
 ### Continuous Integration
 
-GitHub Actions runs the project's automated checks on pushes and pull requests targeting `main`, `master`, or `develop`.
+GitHub Actions runs the project's automated checks on branch pushes, pull requests, and version-tag pushes.
 
 The CI workflow includes:
 
 - Ruff linting
 - Automated tests on Python 3.11, 3.12, and 3.13
 - Test and coverage report artifacts
-- PostgreSQL 16 migration smoke tests
+- PostgreSQL 17 migration smoke tests
+- Docker image build and container smoke tests after the code and database checks pass
 
 Separate workflows provide CodeQL code scanning and dependency security auditing. These checks report findings independently; a successful test run does not by itself establish that every dependency is vulnerability-free.
 
@@ -857,7 +868,13 @@ Doordarshan can be deployed as a FastAPI application on platforms such as Render
 Build command:
 
 ```bash
-pip install -e . && alembic upgrade head
+pip install -e .
+```
+
+Pre-deploy command (recommended for plans that support it):
+
+```bash
+alembic upgrade head
 ```
 
 Start command:
@@ -866,11 +883,15 @@ Start command:
 uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
+Render provides pre-deploy commands for paid web services, private services, and background workers. For plans without this feature, run migrations as a separate, controlled deployment step before the new application version starts. Avoid running migrations independently in every application worker. See the [Render deployment documentation](https://render.com/docs/deploys) for current service options.
+
 Configure all production environment variables through the deployment platform rather than committing them to the repository.
 
 ---
 
 ## Security Considerations
+
+For vulnerability reporting and the disclosure process, see the [Security Policy](SECURITY.md).
 
 Doordarshan includes several foundational security measures:
 
@@ -923,7 +944,7 @@ Production deployments should use HTTPS/WSS, strong secrets, restricted database
 
 ## Contributing
 
-Contributions are welcome and should follow the existing project architecture.
+Contributions are welcome and should follow the existing project architecture. Start with the [contribution guide](CONTRIBUTING.md), which explains the development setup, coding guidelines, testing expectations, database migration requirements, and pull request process.
 
 ### Development Process
 
