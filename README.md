@@ -586,6 +586,144 @@ http://127.0.0.1:8000
 
 ---
 
+
+## Docker
+
+Doordarshan can be run as a containerized FastAPI application with PostgreSQL as a separate service. The image includes the backend, Alembic migration files, and the HTML, CSS, and JavaScript client served by FastAPI.
+
+### Requirements
+
+- Docker Engine or Docker Desktop
+- Docker Compose plugin
+
+### Configure the environment
+
+Create a local environment file:
+
+```bash
+cp .env.example .env
+```
+
+On PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Set the required values in `.env` before starting the application:
+
+- `SECRET_KEY`: generate a strong signing key with `python -c "import secrets; print(secrets.token_urlsafe(48))"`.
+- `METERED_USERNAME` and `METERED_CREDENTIAL`: enter the credentials for your configured Metered TURN service.
+- `POSTGRES_PASSWORD`: set a long URL-safe password. A value generated with `secrets.token_urlsafe(32)` is suitable.
+
+Do not commit `.env` or publish its contents. The Compose configuration supplies the container with a database URL that points to the internal `db` service. The `DATABASE_URL` value in `.env` is retained for running the application directly on the host or against an external database.
+
+### Build, migrate, and start
+
+Build the application image:
+
+```bash
+docker compose build app
+```
+
+Start PostgreSQL and apply the database migrations:
+
+```bash
+docker compose run --rm app alembic upgrade head
+```
+
+Start the application and database:
+
+```bash
+docker compose up -d
+```
+
+Open the application at `http://localhost:8000`. The API documentation is available at `http://localhost:8000/docs`.
+
+Useful commands:
+
+```bash
+docker compose ps
+docker compose logs -f app
+docker compose logs -f db
+docker compose down
+```
+
+The PostgreSQL data is stored in the `postgres_data` named volume and is retained by `docker compose down`. **The command `docker compose down -v` deletes that database volume and its data.** Use it only when you intentionally want to reset the local database.
+
+To use a different local application port, change `APP_PORT` in `.env`. The Compose configuration binds the port to `127.0.0.1` by default so the development service is not exposed directly to the local network.
+
+### Build and run the image directly
+
+Build a versioned local image:
+
+```bash
+docker build --build-arg APP_VERSION=1.0.2 -t doordarshan:1.0.2 .
+```
+
+For a standalone `docker run`, configure `DATABASE_URL` in the supplied environment file to point to a PostgreSQL server reachable from inside the container. `localhost` inside a container refers to the container itself, not the host machine. For local PostgreSQL container orchestration, use the Compose workflow above.
+
+```bash
+docker run --rm \
+  --env-file .env \
+  -p 127.0.0.1:8000:8000 \
+  doordarshan:1.0.2
+```
+
+Apply Alembic migrations to the configured database before serving requests:
+
+```bash
+docker run --rm --env-file .env doordarshan:1.0.2 alembic upgrade head
+```
+
+### Publish to Docker Hub
+
+Create a **public** Docker Hub repository named `doordarshan`, then authenticate:
+
+```bash
+docker login
+```
+
+For a multi-platform release targeting Linux AMD64 and ARM64, create and select a Buildx builder once:
+
+```bash
+docker buildx create --name doordarshan-builder --driver docker-container --use
+docker buildx inspect --bootstrap
+```
+
+For subsequent releases, select the existing builder with `docker buildx use doordarshan-builder`. Then build and push the versioned and `latest` tags:
+
+```bash
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  --build-arg APP_VERSION=1.0.2 \
+  -t YOUR_DOCKERHUB_USERNAME/doordarshan:1.0.2 \
+  -t YOUR_DOCKERHUB_USERNAME/doordarshan:latest \
+  --push \
+  .
+```
+
+Replace `YOUR_DOCKERHUB_USERNAME` with your Docker Hub namespace. Publish `latest` only when the image represents the current stable release. Verify the published image by pulling it:
+
+```bash
+docker pull YOUR_DOCKERHUB_USERNAME/doordarshan:1.0.2
+```
+
+The public repository will be available at:
+
+```text
+https://hub.docker.com/r/YOUR_DOCKERHUB_USERNAME/doordarshan
+```
+
+### Deployment notes
+
+- The container runs as a non-root user and listens on port `8000`.
+- Run Alembic migrations as a separate deployment step; the application image does not modify the database schema automatically at startup.
+- The WebSocket connection manager currently stores room participants in process memory. Run a single Uvicorn worker and a single application replica. Multiple workers or replicas can split room state and signaling until a shared coordination layer is implemented.
+- The image contains the application and browser client; it does not include PostgreSQL, a TURN server, or a media server. The configured Metered service must be reachable by clients for TURN relay when required.
+- For public deployment, place the application behind an HTTPS reverse proxy that supports WebSocket upgrades. Browsers require a secure context for camera and microphone access outside localhost.
+- Use a managed PostgreSQL service or a properly secured database deployment for production, protect credentials with the deployment platform's secret manager, and back up persistent database data.
+
 ## Development Commands
 
 The project includes a Makefile for common development workflows.
